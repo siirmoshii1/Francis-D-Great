@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francis D' Great</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Francis D' Great Barbershop</title>
+
+<link rel="manifest" href="./manifest.json">
+
+<meta name="theme-color" content="#D4AF37">
+<link rel="icon" type="image/png" href="img.png">
+<link rel="apple-touch-icon" href="img.png">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Francis Barber"> <style>
         :root { --bg-dark: #121212; --bg-card: #1E1E1E; --gold: #D4AF37; --text: #E0E0E0; --success: #03DAC6; --danger: #CF6679; }
         * { box-sizing: border-box; }
         body { font-family: 'Roboto', sans-serif; background: var(--bg-dark); color: var(--text); margin: 0; padding-bottom: 80px; }
@@ -47,13 +56,32 @@
         .day-num:hover { background: #333; }
         .day-num.selected { background: var(--gold); color: black; font-weight: bold; }
         .day-num.disabled { color: #444; pointer-events: none; }
+
+        /* PWA Install Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: var(--bg-card); margin: 15% auto; padding: 20px; border: 1px solid #333; border-radius: 8px; width: 80%; max-width: 400px; text-align: center; }
+        .modal-content h2 { color: var(--gold); margin-bottom: 15px; }
+        .modal-content p { margin-bottom: 20px; }
+        .modal-btn { background: var(--gold); color: black; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .modal-btn.no { background: #555; color: white; }
     </style>
 </head>
 <body>
 
+    <!-- PWA Install Modal -->
+    <div id="installModal" class="modal">
+        <div class="modal-content">
+            <h2>Install Francis D' Great Barbershop Appointment System</h2>
+            <p>Install our app for a better experience with quick booking and easy access.</p>
+            <button id="installBtn" class="modal-btn">Install</button>
+            <button id="skipBtn" class="modal-btn no">No Thanks</button>
+        </div>
+    </div>
+
     <div id="clientView">
         <header>
             <h1>Francis D' Great</h1>
+            <h3>Barbershop</h3>
             <p style="color:#aaa; font-size:0.9rem; margin-top:5px;">Book Your Appointment</p>
         </header>
 
@@ -148,11 +176,49 @@
 // --- INIT ---
     window.onload = function() {
         renderCalendar();
-        loadBarbers(); 
+        loadBarbers();
         if (sessionStorage.getItem('adminLogged') === 'true') {
-            openAdminPanel(sessionStorage.getItem('adminPass'), false); 
+            openAdminPanel(sessionStorage.getItem('adminPass'), false);
         }
+        // Show install modal on page load
+        document.getElementById('installModal').style.display = 'block';
     };
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('Service Worker registered'))
+        .catch(err => console.log('Service Worker registration failed', err));
+    }
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('installModal').style.display = 'block';
+    });
+
+    document.getElementById('installBtn').addEventListener('click', () => {
+        document.getElementById('installModal').style.display = 'none';
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        } else {
+            alert('PWA install not available. Make sure the site is served over HTTPS or localhost.');
+        }
+    });
+
+    document.getElementById('skipBtn').addEventListener('click', () => {
+        document.getElementById('installModal').style.display = 'none';
+    });
 
     // ================= CLIENT LOGIC =================
 
