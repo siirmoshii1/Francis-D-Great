@@ -223,7 +223,7 @@ body::before {
 ══════════════════════════════════════ */
 .booking-section {
   max-width: 680px; margin: 0 auto;
-  padding: 4rem 1.5rem 6rem;
+  padding: 4rem 1.5rem 3rem;
   position: relative; z-index: 10;
 }
 .section-label {
@@ -324,26 +324,38 @@ input::placeholder { color: var(--text-dim); }
 input[type="hidden"] { display: none; }
 textarea:focus { outline: none; }
 
-/* ── SUBMIT BAR ── */
-.submit-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: linear-gradient(to top, var(--bg) 60%, transparent);
-  padding: 1.5rem; z-index: 50;
+/* ── INLINE SUBMIT BUTTON ── */
+.btn-submit-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 18px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 1rem;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
 }
-.btn-submit {
-  display: block; width: 100%; max-width: 680px; margin: 0 auto;
-  background: var(--gold); color: #000; border: none; padding: 17px;
-  font-family: 'Josefin Sans', sans-serif; font-weight: 600; font-size: 0.8rem;
-  letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer;
-  border-radius: 1px; transition: all 0.25s; position: relative; overflow: hidden;
-}
-.btn-submit::before {
+.btn-submit-inline::before {
   content: ''; position: absolute; inset: 0;
-  background: rgba(255,255,255,0.15); transform: translateX(-100%); transition: transform 0.4s;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-100%); transition: transform 0.45s;
 }
-.btn-submit:hover::before { transform: translateX(100%); }
-.btn-submit:hover { background: var(--gold2); }
-.btn-submit:disabled { background: var(--text-dim); cursor: not-allowed; }
+.btn-submit-inline:hover::before { transform: translateX(100%); }
+.btn-submit-inline:hover { background: var(--gold2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+.btn-submit-inline:active { transform: translateY(0); }
+.btn-submit-inline:disabled { background: var(--text-dim); cursor: not-allowed; transform: none; box-shadow: none; }
 
 /* ── BOOKING MSG ── */
 .booking-msg {
@@ -761,7 +773,7 @@ textarea::placeholder { color: var(--text-dim); }
   .hero-title { font-size: 3rem; }
   .hero-title span { font-size: 2rem; }
   .section-title { font-size: 2rem; }
-  .booking-section { padding: 2.5rem 1rem 5rem; }
+  .booking-section { padding: 2.5rem 1rem 2rem; }
   .step-card { padding: 1.1rem; }
   .time-grid { grid-template-columns: repeat(2,1fr); }
   .barber-grid { grid-template-columns: repeat(2,1fr); }
@@ -776,29 +788,7 @@ textarea::placeholder { color: var(--text-dim); }
   .theme-toggle { top: 0.8rem; right: 0.8rem; }
 }
 
-/* ── FOOTER MAP BUTTON ── */
-.footer-map-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 1rem;
-  background: none;
-  border: 1px solid rgba(201,168,76,0.4);
-  color: var(--gold);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-.footer-map-btn:hover {
-  background: var(--gold-dim);
-  border-color: var(--gold);
-  transform: translateY(-1px);
-}
+
 
 /* ── MAP MODAL (fullscreen) ── */
 .map-modal {
@@ -808,12 +798,7 @@ textarea::placeholder { color: var(--text-dim); }
   z-index: 1500;
   background: var(--bg);
   flex-direction: column;
-  animation: mapModalIn 0.35s cubic-bezier(0.16,1,0.3,1) both;
 }
-.map-modal.open { display: flex; }
-
-@keyframes mapModalIn {
-  from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -856,40 +841,6 @@ textarea::placeholder { color: var(--text-dim); }
 }
 .map-close-btn:hover { border-color: var(--danger); color: var(--danger); }
 
-.map-directions-bar {
-  padding: 0.85rem 1.2rem;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.map-directions-bar input {
-  flex: 1;
-  margin: 0;
-  padding: 10px 14px;
-  font-size: 0.82rem;
-  border-radius: 6px;
-}
-
-.map-go-btn {
-  background: var(--gold);
-  color: #000;
-  border: none;
-  padding: 10px 18px;
-  font-family: 'Josefin Sans', sans-serif;
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  border-radius: 6px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s;
-  display: flex; align-items: center; gap: 6px;
-}
-.map-go-btn:hover { background: var(--gold2); }
-.map-go-btn:disabled { background: var(--text-dim); cursor: not-allowed; }
 
 .map-iframe-wrap {
   flex: 1;
@@ -922,14 +873,24 @@ textarea::placeholder { color: var(--text-dim); }
 }
 .map-open-gmaps:hover { border-color: var(--gold); color: var(--gold); }
 
-.map-hint {
-  text-align: center;
-  padding: 2rem 1rem;
-  color: var(--text-dim);
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
-}
 
+
+/* ── FOOTER LOCATION ── */
+.footer-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.8rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+.footer-location a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.footer-location a:hover { opacity: 0.7; }
 </style>
 </head>
 <body>
@@ -1134,12 +1095,17 @@ textarea::placeholder { color: var(--text-dim); }
 
       <div class="step-card">
         <div class="step-num">04 / YOUR DETAILS</div>
-        <input type="text"  id="name"  placeholder="Full Name" required>
-        <input type="tel"   id="phone" placeholder="Mobile Number" required>
-        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="text"  id="name"  placeholder="Full Name" required oninput="showSubmitIfReady()">
+        <input type="tel"   id="phone" placeholder="Mobile Number" required oninput="showSubmitIfReady()">
+        <input type="email" id="email" placeholder="Email Address" required oninput="showSubmitIfReady()">
       </div>
 
       <div id="message" class="booking-msg"></div>
+
+      <button type="button" class="btn-submit-inline" id="submitBtn" onclick="submitBooking()" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Confirm Booking
+      </button>
     </form>
 
     <div class="admin-link">
@@ -1149,22 +1115,19 @@ textarea::placeholder { color: var(--text-dim); }
 
   <div class="footer">
     <span class="footer-brand">Francis D' Great</span>
-    Premium Barbershop &nbsp;·&nbsp; Baliuag, Bulacan
-    <button class="footer-map-btn" onclick="openMapModal()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Get Directions
-    </button>
+    Premium Barbershop &nbsp;·&nbsp; Panay Norte, Magsingal, Ilocos Sur
+    <div class="footer-location">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <a href="https://maps.app.goo.gl/QuDNVvby9pwCkhtq5" target="_blank" rel="noopener">
+       My Location
+      </a>
+    </div>
   </div>
 </div>
 
-<!-- SUBMIT BAR -->
-<div class="submit-bar" id="submitBar">
-  <button type="button" class="btn-submit" id="submitBtn" onclick="submitBooking()">Confirm Booking</button>
-</div>
+<div id="submitBar" style="display:none;"></div>
 
-<!-- ══════════════════════════
-     ADMIN PANEL
-══════════════════════════ -->
+
 <div id="adminPanel">
   <div class="admin-header">
     <div class="admin-header-left">
@@ -1192,7 +1155,6 @@ textarea::placeholder { color: var(--text-dim); }
       <div class="admin-card-title">Appointments</div>
 
 
-      <!-- FILTER TABS -->
       <div class="filter-tabs-wrap">
         <div class="filter-tabs" id="filterTabs">
           <button class="filter-tab active" data-filter="All"       onclick="setFilter('All')">All <span class="tab-count" id="cnt-All"></span></button>
@@ -1211,10 +1173,8 @@ textarea::placeholder { color: var(--text-dim); }
         <div style="color:var(--text-dim);font-size:0.82rem;letter-spacing:0.05em;" id="emptyMsg">No bookings in this category.</div>
       </div>
 
-      <!-- MOBILE cards -->
       <div class="booking-cards" id="bookingCards"></div>
 
-      <!-- DESKTOP table -->
       <table class="admin-table" id="bookingTable">
         <thead>
           <tr>
@@ -1246,9 +1206,6 @@ const TIME_SLOTS = [
 let selectedBarber = '', selectedDate = '', selectedTime = '';
 let currentDate = new Date();
 
-/* ══════════════════════════
-   THEME
-══════════════════════════ */
 function applyTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
   const icon = t === 'dark' ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>` : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
@@ -1260,9 +1217,7 @@ function toggleTheme() {
   applyTheme(cur === 'dark' ? 'light' : 'dark');
 }
 
-/* ══════════════════════════
-   TOAST SYSTEM
-══════════════════════════ */
+
 function showToast(msg, type = 'info', duration = 3000) {
   const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
   const c = document.getElementById('toastContainer');
@@ -1382,6 +1337,7 @@ function renderBarberCards(names) {
       selectedBarber = name;
       document.getElementById('barber').value = name;
       checkAvailability();
+      showSubmitIfReady();
     };
     grid.appendChild(card);
   });
@@ -1436,6 +1392,7 @@ function renderTimeGrid(booked = []) {
       div.classList.add('selected');
       selectedTime = slot.value;
       document.getElementById('time').value = slot.value;
+      showSubmitIfReady();
     };
     grid.appendChild(div);
   });
@@ -1450,6 +1407,18 @@ function checkAvailability() {
     .then(r => r.json())
     .then(booked => renderTimeGrid(Array.isArray(booked) ? booked : []))
     .catch(() => renderTimeGrid([]));
+}
+
+/* ══════════════════════════
+   SHOW SUBMIT BUTTON
+══════════════════════════ */
+function showSubmitIfReady() {
+  const name  = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const btn   = document.getElementById('submitBtn');
+  const ready = selectedBarber && selectedDate && selectedTime && name && phone && email;
+  btn.style.display = ready ? 'flex' : 'none';
 }
 
 /* ══════════════════════════
@@ -1489,6 +1458,7 @@ function submitBooking() {
       document.getElementById('timeGrid').innerHTML =
         '<div class="time-slot booked" style="grid-column:1/-1;text-align:center;text-decoration:none;opacity:0.5;">Select a date first...</div>';
       selectedBarber=''; selectedDate=''; selectedTime='';
+      document.getElementById('submitBtn').style.display = 'none';
     } else {
       msg.className = 'booking-msg error';
       msg.innerHTML = '✖ ' + (d.message || 'Something went wrong. Please try again.');
@@ -1945,105 +1915,6 @@ function deleteBarber(name) {
     fetch(SCRIPT_URL+'?action=getBarbers').then(r=>r.json()).then(d=>{ if(Array.isArray(d)) renderAdminBarberList(d); });
   }).catch(() => showToast('Failed to remove barber.', 'error'));
 }
-
-/* ══════════════════════════
-   MAP MODAL
-══════════════════════════ */
-const SHOP_PLACE = 'Francis+D+Great+Barbershop+Baliuag+Bulacan';
-const GMAPS_KEY  = 'AIzaSyD-9tSrke72wouOpKWVWhSMNGNECDNE6p0';
-
-function openMapModal() {
-  document.getElementById('mapModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  loadShopEmbed();
-}
-
-function closeMapModal() {
-  document.getElementById('mapModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function loadShopEmbed() {
-  const iframe = document.getElementById('mapIframe');
-  iframe.src = `https://www.google.com/maps/embed/v1/place?key=${GMAPS_KEY}&q=${SHOP_PLACE}&zoom=17`;
-}
-
-function getDirections() {
-  const origin = document.getElementById('originInput').value.trim();
-  const iframe = document.getElementById('mapIframe');
-  const btn    = document.getElementById('dirBtn');
-  const gmLink = document.querySelector('.map-open-gmaps');
-
-  if (!origin) {
-    loadShopEmbed();
-    return;
-  }
-
-  btn.disabled = true;
-  btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg> Loading...`;
-
-  const enc_origin = encodeURIComponent(origin + ', Bulacan, Philippines');
-  const enc_dest   = encodeURIComponent('Francis D Great Barbershop, Baliuag, Bulacan, Philippines');
-
-  iframe.src = `https://www.google.com/maps/embed/v1/directions?key=${GMAPS_KEY}&origin=${enc_origin}&destination=${enc_dest}&mode=driving`;
-  iframe.onload = () => {
-    btn.disabled = false;
-    btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg> Go`;
-  };
-
-  // Update the "Open in Google Maps" deep link to show directions too
-  if (gmLink) gmLink.href = `https://www.google.com/maps/dir/${enc_origin}/${enc_dest}`;
-}
-
-// Keyboard: Escape closes map, Enter triggers directions
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && document.getElementById('mapModal').classList.contains('open')) {
-    closeMapModal();
-  }
-});
-document.getElementById('originInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') getDirections();
-});
-
 </script>
-
-<!-- ══════════════════════════
-     MAP / DIRECTIONS MODAL
-══════════════════════════ -->
-<div id="mapModal" class="map-modal">
-
-  <div class="map-modal-header">
-    <div>
-      <div class="map-modal-title">Find Us</div>
-      <div class="map-modal-sub">Francis D' Great Barbershop · Panay Norte, Magsingal, Ilocos Sur</div>
-    </div>
-    <button class="map-close-btn" onclick="closeMapModal()" title="Close">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-
-  <div class="map-directions-bar">
-    <input type="text" id="originInput" placeholder="Your location (e.g. SM Baliuag, Bulacan)" style="background:var(--bg2);">
-    <button class="map-go-btn" onclick="getDirections()" id="dirBtn">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-      Go
-    </button>
-  </div>
-
-  <div class="map-iframe-wrap" id="mapIframeWrap">
-    <!-- Default: show shop location -->
-    <iframe
-      id="mapIframe"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3851.1234567890!2d120.8976!3d14.9558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zRnJhbmNpcyBEJyBHcmVhdCBCYXJiZXJzaG9w!5e0!3m2!1sen!2sph!4v1234567890!5m2!1sen!2sph"
-      allowfullscreen
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-    <a class="map-open-gmaps" href="https://maps.app.goo.gl/QuDNVvby9pwCkhtq5" target="_blank" rel="noopener">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      Open in Google Maps
-    </a>
-  </div>
-</div>
 </body>
 </html>
